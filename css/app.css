@@ -5,6 +5,10 @@
     color: #fff;
 }
 
+.red{
+    background-color:red;
+}
+
 @keyframes rotater {
     from {
         transform: rotate(0deg);

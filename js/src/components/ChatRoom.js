@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+
 class ChatRoom extends Component {
 
 	constructor(props, context){

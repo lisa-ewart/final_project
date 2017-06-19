@@ -105,6 +105,14 @@ export default class GMaps extends Component {
             {this.renderMarkers()}
         </div>);
 	}
+
+
+
+	
+
+
+
+
 	renderMarkers() {
 		const {mapLoaded} = this.state;
 		if (!mapLoaded) return null;
@@ -139,6 +147,13 @@ export class Marker extends Component {
 		return null;
 	}
 }
+
+
+
+
+
+
+
 
 
 export class InfoWindow extends Component {
