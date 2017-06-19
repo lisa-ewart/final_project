@@ -31,7 +31,7 @@
     });
   } 
 
-createNewUser('Lisa', 'lisa@email.com', 999-999-9999, 40.5, 50.7, ['electrician', 'plumber', 'HVAC']);
+createNewUser('Lisa', 'lisa@email.com', 9999999999, 40.5, 50.7, ['electrician', 'plumber', 'HVAC']);
 
 //database.ref('/lisa').set([0,7,8,9]);
 
