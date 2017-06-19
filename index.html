@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>GeoContract</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/grid.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/menu.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/form.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/checkbox.min.css">
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
+</head>
+
+<body>
+    <div class="ui stackable menu">
+        <div class="item">
+            <img src="./assets/pin.png">
+            <h2>GeoLocate </h2>
+        </div>
+        <a class="item">Features</a>
+        <a class="item">Testimonials</a>
+        <button class="js_google_signout signout centermargin">Sign out</button>
+    </div>
+
+    <div class="bgphoto">
+        <div class="signInWindow">
+            <div class="font2 extraPad">Sign in with Gmail</div>
+            <div class="ui form">
+
+                <div class="inline field">
+                    <label class="font1">Username</label>
+                    <input type="text" placeholder="Choose a Username">
+                </div>
+
+                <button class="js_google_signin signin centermargin">Sign in</button>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="app"></div>
+
+     <!-- <div class="profDiv">
+        <div class="ui toggle checkbox">
+            <input type="checkbox" name="public">
+            <label>Electrician</label>
+        </div>
+
+        <div class="ui toggle checkbox">
+            <input type="checkbox" name="public">
+            <label>Plumber</label>
+        </div>
+        <div class="ui toggle checkbox">
+            <input type="checkbox" name="public">
+            <label>HVAC</label>
+        </div>
+        <div class="ui toggle checkbox">
+            <input type="checkbox" name="public">
+            <label>Landscaper</label>
+        </div>
+    </div> -->
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDf4d7CSjoPqmlYuDNZXO3lXj5CsWMH7QI",
+        authDomain: "geocontract-61218.firebaseapp.com",
+        databaseURL: "https://geocontract-61218.firebaseio.com",
+        projectId: "geocontract-61218",
+        storageBucket: "geocontract-61218.appspot.com",
+        messagingSenderId: "653176035877"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+       
+
+        <script src="./js/dist/bundle.js"></script>
+        <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
