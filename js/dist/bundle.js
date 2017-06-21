@@ -9881,6 +9881,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 //import Container, {infoWindow}  from './markerClick';
 
 
@@ -9921,6 +9922,9 @@ var App = function (_Component) {
         // }
 
 
+        //<InfoWindow position={this.state.pos} />
+
+
     }, {
         key: 'render',
         value: function render() {
@@ -9933,13 +9937,7 @@ var App = function (_Component) {
                     this.state.pos ? _react2.default.createElement(
                         _gMap2.default,
                         _extends({}, this.props, { apiKey: "AIzaSyATYry8EYxN0doyvmyEDPcfKnz2X6s7hjE", center: this.state.pos }),
-                        _react2.default.createElement(_gMap.Marker, { position: this.state.pos, animation: 'DROP', onClick: this.InfoWindow }),
-                        _react2.default.createElement(_gMap.InfoWindow, {
-                            title: 'Lisa',
-                            position: this.state.pos,
-                            content: 'Find me'
-
-                        })
+                        _react2.default.createElement(_gMap.Marker, { position: this.state.pos, animation: 'DROP', onClick: _gMap.InfoWindow })
                     ) : null
                 ),
                 _react2.default.createElement(
@@ -10026,6 +10024,7 @@ var ChatRoom = function (_Component) {
 		key: 'submitMessage',
 		value: function submitMessage(event) {
 			console.log('submitMessage: ' + this.state.message);
+			console.log('this event occurs in submitMessage');
 			var nextMessage = {
 				id: this.state.messages.length,
 				text: this.state.message
@@ -10151,7 +10150,8 @@ var loadGMapScript = function loadGMapScript(url, params) {
 var loadMap = function loadMap(domNode) {
 	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	return new google.maps.Map(domNode, Object.assign({
-		zoom: 14
+		zoom: 14,
+		scrollwheel: false
 	}, options));
 };
 
@@ -10303,6 +10303,17 @@ var Marker = exports.Marker = function (_Component2) {
 				map: map,
 				animation: google.maps.Animation[animation]
 			});
+
+			var contentString = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading">LisaNicole</h1>' + '<h2 class="firstHeading">License #: N/A</h2>' + '<div id="bodyContent">' + '<p><b>LisaNicole </b>is a web app developer  ' + '<button class = "instMessageBtn">Instant message LisaNicole</button>' + '<p>LisaNicole ratings: </p>' + '-She was allright...Eh...' + '<p>-Could be worse.</p>' + '<p></p>' + '</div>' + '</div>';
+
+			this.marker.addListener('click', function () {
+				// console.log("clicked map");
+				this.infowindow = new google.maps.InfoWindow({
+					position: position,
+					map: map,
+					content: contentString
+				});
+			});
 		}
 	}, {
 		key: 'componentDidMount',
@@ -10425,14 +10436,6 @@ exports.deleteUser = deleteUser;
 exports.createProfile = createProfile;
 exports.editProfile = editProfile;
 exports.mapSearch = mapSearch;
-
-// addUser,
-//     deleteUser,
-//     createProfile,
-//     editProfile,
-//     mapSearch,
-
-
 function addUser(oldStore, options) {}
 
 function deleteUser(oldStore, options) {}
@@ -10442,28 +10445,6 @@ function createProfile(oldStore, options) {}
 function editProfile(oldStore, options) {}
 
 function mapSearch(oldStore, options) {}
-
-// export function inactivateAlarm(oldStore, options) {
-//     const {time} = options;
-//     const {active_alarms, inactive_alarms} = oldStore;
-
-//     return Promise.resolve().then(_ => {
-//         const [newA, newIn] = active_alarms.reduce((_arr, a) => {
-//             if (a.time !== time) {
-//                 _arr[0].push(a);
-//             }
-//             else {
-//                 _arr[1].push(a);
-//             }
-//             return _arr;
-//         }, [[], inactive_alarms]);
-
-//     	return Object.assign({}, oldStore, {
-//     		active_alarms: newA,
-//             inactive_alarms: newIn,
-//     	});
-//     })
-// }
 
 /***/ }),
 /* 89 */

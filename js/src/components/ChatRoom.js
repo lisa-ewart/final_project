@@ -35,6 +35,7 @@ class ChatRoom extends Component {
 
 	submitMessage(event){
 		console.log('submitMessage: '+this.state.message)
+		console.log('this event occurs in submitMessage')
 		const nextMessage = {
 			id: this.state.messages.length,
 			text: this.state.message

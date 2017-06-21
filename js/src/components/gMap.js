@@ -41,6 +41,7 @@ const loadGMapScript = (url, params) => {
 
 const loadMap = (domNode, options = {}) => new google.maps.Map(domNode, Object.assign({
 	zoom: 14,
+	scrollwheel: false,
 }, options));
 
 export default class GMaps extends Component {
@@ -97,6 +98,8 @@ export default class GMaps extends Component {
 		this._loadMap();
 		this._initShimLogic();
 	}
+
+
 	render() {
 		const {_wrapStyle, _shimStyle} = this;
 		return (<div ref="root" style={_wrapStyle}>
@@ -105,13 +108,6 @@ export default class GMaps extends Component {
             {this.renderMarkers()}
         </div>);
 	}
-
-
-
-	
-
-
-
 
 	renderMarkers() {
 		const {mapLoaded} = this.state;
@@ -126,6 +122,8 @@ export default class GMaps extends Component {
 	}
 }
 
+
+
 export class Marker extends Component {
 	marker = null
 	_loadMarker(props) {
@@ -136,6 +134,32 @@ export class Marker extends Component {
             map,
             animation: google.maps.Animation[animation]
         });
+
+          const contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">LisaNicole</h1>'+
+            '<h2 class="firstHeading">License #: N/A</h2>'+
+            '<div id="bodyContent">'+
+            '<p><b>LisaNicole </b>is a web app developer  '+
+            '<button class = "instMessageBtn">Instant message LisaNicole</button>'+
+            '<p>LisaNicole ratings: </p>'+
+            '-She was allright...Eh...'+
+             '<p>-Could be worse.</p>'+
+              '<p></p>'+
+            
+            '</div>'+
+            '</div>';
+
+       		 this.marker.addListener('click', function() {
+             // console.log("clicked map");
+             	this.infowindow = new google.maps.InfoWindow({
+		            position,
+		            map,
+		            content: contentString,
+		        });
+             });
+
 	}
 	componentDidMount() {
 		this._loadMarker(this.props);
@@ -151,6 +175,8 @@ export class Marker extends Component {
 
 
 
+		
+
 
 
 
@@ -158,6 +184,8 @@ export class Marker extends Component {
 
 export class InfoWindow extends Component {
 	infowindow = null
+
+
 	_loadWindow(props) {
 		const {position, map, title, content} = props;
 		if (!map) return;

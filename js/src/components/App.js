@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GMaps, { Marker, InfoWindow } from './gMap';
+
 //import Container, {infoWindow}  from './markerClick';
 import ChatRoom from './ChatRoom';
 
@@ -38,18 +39,13 @@ export default class App extends Component {
     // }
 
 
+     //<InfoWindow position={this.state.pos} />
+
+
     render() {
         return <div>
             <div>{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyATYry8EYxN0doyvmyEDPcfKnz2X6s7hjE"} center={this.state.pos}>
-                <Marker position={this.state.pos} animation="DROP" onClick={this.InfoWindow} />
-                 
-
-                <InfoWindow
-                    title="Lisa"  
-                    position={this.state.pos}
-                    content="Find me"
-
-                />
+                <Marker position={this.state.pos} animation="DROP" onClick={InfoWindow} />
 
                 </GMaps> : null}
             </div>
