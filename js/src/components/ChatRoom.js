@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-class ChatRoom extends Component {
+export class ChatRoom extends Component {
 
 	constructor(props, context){
 		super(props, context)
@@ -45,7 +45,7 @@ class ChatRoom extends Component {
 		// this.setState({
 		// 	messages:list
 		// })
-		firebase.database().ref('messages/'+nextMessage.id).set(nextMessage)
+		firebase.database().ref('users/messages/'+nextMessage.id).set(nextMessage)
 	}
 
 	render(){

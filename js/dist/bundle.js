@@ -9773,7 +9773,7 @@ module.exports = getIteratorFn;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+   value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -9801,51 +9801,97 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Main = function (_Component) {
-	_inherits(Main, _Component);
+   _inherits(Main, _Component);
 
-	function Main() {
-		var _ref;
+   function Main() {
+      var _ref;
 
-		var _temp, _this, _ret;
+      var _temp, _this, _ret;
 
-		_classCallCheck(this, Main);
+      _classCallCheck(this, Main);
 
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+         args[_key] = arguments[_key];
+      }
 
-		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Main.__proto__ || Object.getPrototypeOf(Main)).call.apply(_ref, [this].concat(args))), _this), _this.state = _store.Store, _temp), _possibleConstructorReturn(_this, _ret);
-	}
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Main.__proto__ || Object.getPrototypeOf(Main)).call.apply(_ref, [this].concat(args))), _this), _this.state = _store.Store, _temp), _possibleConstructorReturn(_this, _ret);
+   }
 
-	_createClass(Main, [{
-		key: 'dispatch',
-		value: function dispatch(actionName, options) {
-			var _this2 = this;
+   _createClass(Main, [{
+      key: 'dispatch',
+      value: function dispatch(actionName, options) {
+         var _this2 = this;
 
-			var actionToDo = _actions.actions[actionName];
-			actionToDo(this.state, options).then(function (newStore) {
-				_this2.setState(newStore);
-			});
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var _this3 = this;
+         var actionToDo = _actions.actions[actionName];
+         actionToDo(this.state, options).then(function (newStore) {
+            _this2.setState(newStore);
+         });
+      }
+   }, {
+      key: 'render',
+      value: function render() {
+         var _this3 = this;
 
-			var sharedProps = {
-				dispatch: function dispatch() {
-					return _this3.dispatch.apply(_this3, arguments);
-				}
-			};
+         var sharedProps = {
+            dispatch: function dispatch() {
+               return _this3.dispatch.apply(_this3, arguments);
+            }
+         };
 
-			return _react2.default.createElement(_App2.default, _extends({}, this.state, sharedProps));
-		}
-	}]);
+         return _react2.default.createElement(_App2.default, _extends({}, this.state, sharedProps));
+      }
+   }]);
 
-	return Main;
+   return Main;
 }(_react.Component);
 
 exports.default = Main;
+
+
+var provider = new firebase.auth.GoogleAuthProvider();
+
+var signinBtn = document.querySelector('.js_google_signin');
+
+if (signinBtn !== null) {
+   signinBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      //start signin()
+
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+         var token = result.credential.accessToken;
+         var user = result.user;
+
+         console.log(token);
+         console.log(user);
+         console.log(result);
+         console.log(user.displayName);
+         console.log(user.email);
+         console.log(user.uid);
+      }).catch(function (error) {
+         var errorCode = error.code;
+         var errorMessage = error.message;
+
+         console.log(error.code);
+         console.log(error.message);
+      });
+      //end signin()
+
+   });
+}
+
+var signoutBtn = document.querySelector('.js_google_signout');
+
+if (signoutBtn !== null) {
+   signoutBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      firebase.auth().signOut().then(function () {
+         console.log('Signout Succesfull');
+      }, function (error) {
+         console.log('Signout Failed');
+      });
+   });
+}
 
 /***/ }),
 /* 84 */
@@ -9964,6 +10010,7 @@ exports.default = App;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.ChatRoom = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -9979,7 +10026,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ChatRoom = function (_Component) {
+var ChatRoom = exports.ChatRoom = function (_Component) {
 	_inherits(ChatRoom, _Component);
 
 	function ChatRoom(props, context) {
@@ -10033,7 +10080,7 @@ var ChatRoom = function (_Component) {
 				// this.setState({
 				// 	messages:list
 				// })
-			};firebase.database().ref('messages/' + nextMessage.id).set(nextMessage);
+			};firebase.database().ref('users/messages/' + nextMessage.id).set(nextMessage);
 		}
 	}, {
 		key: 'render',
@@ -10451,15 +10498,11 @@ function mapSearch(oldStore, options) {}
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// export const Store = {
+//     active_users: [],
+//     currentRoute: '/create',
+// }
 
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var Store = exports.Store = {
-    active_users: [],
-    currentRoute: '/create'
-};
 
 /***/ }),
 /* 90 */

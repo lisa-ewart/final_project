@@ -1,0 +1,33 @@
+{
+    "users": {
+        "i3o83989JHBJd": {
+            "username": "Katie",
+            "phonenum": 9739007878 ,
+            "lat": 82.748272424,
+            "long": 92.47298476289,
+            "professions": ["side-boyfriend","coffee-buyer"]
+            // "services": ,
+        },
+        "93893KKHB33": {
+            "username": "Mike",
+            "phonenum": 9739007878 ,
+            "lat": 82.748272424,
+            "long": 92.47298476289,
+
+            // "services": ,
+        }
+    },
+
+    "electrician": {
+        "electrician": 1,
+        
+    },
+
+    "plumber": {
+        "i3o83989JHBJd" : {
+
+        }
+    }
+
+    
+}

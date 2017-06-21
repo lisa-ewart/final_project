@@ -42,6 +42,10 @@ export default class App extends Component {
      //<InfoWindow position={this.state.pos} />
 
 
+
+
+    
+
     render() {
         return <div>
             <div>{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyATYry8EYxN0doyvmyEDPcfKnz2X6s7hjE"} center={this.state.pos}>
@@ -61,4 +65,9 @@ export default class App extends Component {
 
 
 }
+
+
+
+
+
 
