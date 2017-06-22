@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import GMaps, { Marker, InfoWindow } from './gMap';
-
+import Auth from './Auth';
 //import Container, {infoWindow}  from './markerClick';
-import ChatRoom from './ChatRoom';
-
+// import ChatRoom from './ChatRoom';
 
 
 
@@ -14,7 +13,7 @@ export default class App extends Component {
         super(props)
 
         this.state = {
-            // pos: {lat: 40.730610, lng: -73.935242 }
+            user: firebase.auth().currentUser
         }
     }
 
@@ -48,13 +47,14 @@ export default class App extends Component {
 
     render() {
         return <div>
+            <Auth />
             <div>{this.state.pos ? <GMaps {...this.props} apiKey={"AIzaSyATYry8EYxN0doyvmyEDPcfKnz2X6s7hjE"} center={this.state.pos}>
-                <Marker position={this.state.pos} animation="DROP" onClick={InfoWindow} />
-
+                <Marker position={this.state.pos} animation="DROP" />
+                    
                 </GMaps> : null}
             </div>
             <div>
-                <ChatRoom />
+                  
             </div>
         </div>  
 

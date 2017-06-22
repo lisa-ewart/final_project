@@ -24,7 +24,9 @@ body{
 
 }
 
-
+.hidden{
+    display:none;
+}
 
 .signin{
     width:75px;

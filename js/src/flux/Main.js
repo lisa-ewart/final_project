@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {initFirebase, signIn} from '../firebase'
 import App from '../components/App';
 
 import { 
@@ -9,6 +9,9 @@ import {
 import {
     Store
 } from './store';
+
+
+initFirebase()
 
 export default class Main extends Component {
     state = Store
@@ -34,63 +37,63 @@ export default class Main extends Component {
 
 
 
-const provider = new firebase.auth.GoogleAuthProvider();
+// const provider = new firebase.auth.GoogleAuthProvider();
 
 
-const signinBtn = document.querySelector('.js_google_signin');
+// const signinBtn = document.querySelector('.js_google_signin');
 
-if(signinBtn !== null) {
-        signinBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            //start signin()
+// if(signinBtn !== null) {
+//         signinBtn.addEventListener('click', (e) => {
+//             e.preventDefault();
+//             //start signin()
             
-            firebase.auth()
-            .signInWithPopup(provider).then(function(result) {
-               var token = result.credential.accessToken;
-               var user = result.user;
+//             firebase.auth()
+//             .signInWithPopup(provider).then(function(result) {
+//                var token = result.credential.accessToken;
+//                var user = result.user;
                
-               console.log(token)
-               console.log(user)
-               console.log(result)
-               console.log(user.displayName)
-               console.log(user.email)
-               console.log(user.uid)
+//                console.log(token)
+//                console.log(user)
+//                console.log(result)
+//                console.log(user.displayName)
+//                console.log(user.email)
+//                console.log(user.uid)
 
-            }).catch(function(error) {
-               var errorCode = error.code;
-               var errorMessage = error.message;
+//             }).catch(function(error) {
+//                var errorCode = error.code;
+//                var errorMessage = error.message;
                
-               console.log(error.code)
-               console.log(error.message)
-            });
-         //end signin()
+//                console.log(error.code)
+//                console.log(error.message)
+//             });
+//          //end signin()
             
          
 
          
-             });
-   }
+//              });
+//    }
 
 
 
 
-const signoutBtn = document.querySelector('.js_google_signout');
+// const signoutBtn = document.querySelector('.js_google_signout');
 
-if(signoutBtn !== null) {
-        signoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
+// if(signoutBtn !== null) {
+//         signoutBtn.addEventListener('click', (e) => {
+//             e.preventDefault();
 
 
-                  firebase.auth().signOut()
+//                   firebase.auth().signOut()
                   
-                  .then(function() {
-                     console.log('Signout Succesfull')
-                  }, function(error) {
-                     console.log('Signout Failed')  
-                  });
+//                   .then(function() {
+//                      console.log('Signout Succesfull')
+//                   }, function(error) {
+//                      console.log('Signout Failed')  
+//                   });
          
-             });
+//              });
        
-   }
+//    }
 
 

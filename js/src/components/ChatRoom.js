@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 
+
 export class ChatRoom extends Component {
 
 	constructor(props, context){
@@ -11,6 +12,13 @@ export class ChatRoom extends Component {
 			message: '',
 			messages: []
 		}
+	}
+
+	_wrapStyle = {
+		position: 'relative',
+		width : "80%",
+        height : "600px",
+        backgroundColor: "#ccc",
 	}
 
 	componentDidMount(){

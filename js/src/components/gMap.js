@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ChatRoom from './ChatRoom';
 
 const generateRandomFunc = (functionRoot, cb = function(){}) => {
 	const functionName = `${functionRoot}_${Date.now()}`;
@@ -51,7 +52,7 @@ export default class GMaps extends Component {
 	}
 	_wrapStyle = {
 		position: 'relative',
-		width : "100%",
+		width : "80%",
         height : "600px",
 	}
 	_shimStyle = {
@@ -173,7 +174,9 @@ export class Marker extends Component {
 }
 
 
-
+ // google.maps.event.addListener(marker, 'click', function() {
+ //    //<code to go to user's profile page>
+ //  });
 
 		
 
