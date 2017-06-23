@@ -10,7 +10,7 @@ export default class Auth extends Component {
     constructor(props){
         super(props)
         this.state = {
-        	// 
+        	bgClass: 'bgphoto'
         }
     }
 
@@ -18,6 +18,12 @@ export default class Auth extends Component {
         
     }
 
+    handleSignIn() {
+    	signIn()
+    	this.setState({
+    		bgClass: 'hidden'
+    	})
+    }
     
     
 
@@ -35,12 +41,12 @@ export default class Auth extends Component {
 		    <a className="item">Profile</a>
 		</div>
 
-		<div className="bgphoto">
+		<div className={this.state.bgClass}>
 		    <div className="signInWindow">
 		        <div className="font2 extraPad">Sign in/up with Gmail</div>
 		        <div className="ui form">
 
-		            <button onClick={signIn} className="js_google_signin signin centermargin">Sign in</button>
+		            <button onClick={() => this.handleSignIn()} className="js_google_signin signin centermargin">Sign in</button>
 		            <button className="js_google_signout signout centermargin">Sign out</button>
 
 		        </div>
@@ -57,7 +63,6 @@ export default class Auth extends Component {
 
 
 }
-
 
 
 

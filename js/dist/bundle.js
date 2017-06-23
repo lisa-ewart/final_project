@@ -6585,120 +6585,90 @@ module.exports = __webpack_require__(123);
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-exports.ChatRoom = undefined;
+//const firebase = require('firebase');
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var initFirebase = exports.initFirebase = function initFirebase() {
+  console.log("in firebase.js");
 
-var _react = __webpack_require__(16);
+  var config = {
+    apiKey: "AIzaSyDf4d7CSjoPqmlYuDNZXO3lXj5CsWMH7QI",
+    authDomain: "geocontract-61218.firebaseapp.com",
+    databaseURL: "https://geocontract-61218.firebaseio.com",
+    projectId: "geocontract-61218",
+    storageBucket: "geocontract-61218.appspot.com",
+    messagingSenderId: "653176035877"
+  };
+  firebase.initializeApp(config);
 
-var _react2 = _interopRequireDefault(_react);
+  var database = firebase.database();
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  database.ref('/').once('value').then(function (data) {
+    return console.log(data.val());
+  });
+};
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+// createNewUser('Lisa', 'lisa@email.com', 9999999999, 40.5, 50.7, ['electrician', 'plumber', 'HVAC']);
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+//database.ref('/lisa').set([0,7,8,9]);
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     console.log(user)
+//     database.ref('users/'+user.uid).once('value').then(data=>{
 
-var ChatRoom = exports.ChatRoom = function (_Component) {
-	_inherits(ChatRoom, _Component);
+//       if(data.val()){
+//         console.log('welcome ' + user.displayName)
+//       }else{
+//         //console.log('Hey! ' + user.displayName + ' I don\'t know who you are' )
+//         console.log('Hey! ' + user.displayName + ' I don\'t know who you are' )
+//         createNewUser(user.uid, user.email, user.phoneNumber, ['electrician', 'plumber', 'HVAC']);
+//       }
+//     })
+//   } else {
+//     console.log('no user exist')
+//   }
+// });
 
-	function ChatRoom(props, context) {
-		_classCallCheck(this, ChatRoom);
+var createNewUser = exports.createNewUser = function createNewUser(gmailId, email, phonenum, services) {
+  var newUserRef = database.ref('users').push();
+  var newUserKey = newUserRef.key;
 
-		var _this = _possibleConstructorReturn(this, (ChatRoom.__proto__ || Object.getPrototypeOf(ChatRoom)).call(this, props, context));
+  database.ref('users/' + gmailId).set({
+    email: email,
+    phonenum: phonenum,
+    services: services
+  });
+};
 
-		_this._wrapStyle = {
-			position: 'relative',
-			width: "80%",
-			height: "600px",
-			backgroundColor: "#ccc"
-		};
+//const provider = new firebase.auth.GoogleAuthProvider();
 
-		_this.updateMessage = _this.updateMessage.bind(_this);
-		_this.submitMessage = _this.submitMessage.bind(_this);
-		_this.state = {
-			message: '',
-			messages: []
-		};
-		return _this;
-	}
 
-	_createClass(ChatRoom, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var _this2 = this;
+var signIn = exports.signIn = function signIn() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function (result) {
+    var token = result.credential.accessToken;
+    var user = result.user;
+    console.log(user);
+    console.log(user.displayName);
+    console.log(user.email);
+    console.log(user.uid);
+  }).catch(function (error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(error.code);
+    console.log(error.message);
+  });
+};
 
-			console.log('componentDidMount');
-			firebase.database().ref('messages/').on('value', function (snapshot) {
-				var currentMessages = snapshot.val();
-
-				if (currentMessages != null) {
-					_this2.setState({
-						messages: currentMessages
-					});
-				}
-			});
-		}
-	}, {
-		key: 'updateMessage',
-		value: function updateMessage(event) {
-			//	console.log('updateMessage: '+event.target.value)
-			this.setState({
-				message: event.target.value
-			});
-		}
-	}, {
-		key: 'submitMessage',
-		value: function submitMessage(event) {
-			console.log('submitMessage: ' + this.state.message);
-			console.log('this event occurs in submitMessage');
-			var nextMessage = {
-				id: this.state.messages.length,
-				text: this.state.message
-				// let list = Object.assign([], this.state.messages)
-				// list.push(nextMessage)
-				// this.setState({
-				// 	messages:list
-				// })
-			};firebase.database().ref('users/messages/' + nextMessage.id).set(nextMessage);
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var currentMessage = this.state.messages.map(function (message, i) {
-				return _react2.default.createElement(
-					'li',
-					{ key: message.id },
-					message.text
-				);
-			});
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'ol',
-					null,
-					currentMessage
-				),
-				_react2.default.createElement('input', { onChange: this.updateMessage, type: 'text', placeholder: 'Message' }),
-				_react2.default.createElement('br', null),
-				_react2.default.createElement(
-					'button',
-					{ onClick: this.submitMessage },
-					'Submit Message'
-				)
-			);
-		}
-	}]);
-
-	return ChatRoom;
-}(_react.Component);
-
-exports.default = ChatRoom;
+var signOut = exports.signOut = function signOut() {
+  firebase.auth().signOut().then(function () {
+    console.log('Signout Succesfull');
+  }, function (error) {
+    console.log('Signout Failed');
+  });
+};
 
 /***/ }),
 /* 52 */
@@ -9907,7 +9877,7 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _firebase = __webpack_require__(88);
+var _firebase = __webpack_require__(51);
 
 var _App = __webpack_require__(85);
 
@@ -10049,7 +10019,7 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _gMap = __webpack_require__(87);
+var _gMap = __webpack_require__(88);
 
 var _gMap2 = _interopRequireDefault(_gMap);
 
@@ -10152,7 +10122,7 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _firebase = __webpack_require__(88);
+var _firebase = __webpack_require__(51);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10171,7 +10141,7 @@ var Auth = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).call(this, props));
 
         _this.state = {
-            // 
+            bgClass: 'bgphoto'
         };
         return _this;
     }
@@ -10180,8 +10150,18 @@ var Auth = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {}
     }, {
+        key: 'handleSignIn',
+        value: function handleSignIn() {
+            (0, _firebase.signIn)();
+            this.setState({
+                bgClass: 'hidden'
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             console.log(this.props);
 
             return _react2.default.createElement(
@@ -10213,7 +10193,7 @@ var Auth = function (_Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'bgphoto' },
+                    { className: this.state.bgClass },
                     _react2.default.createElement(
                         'div',
                         { className: 'signInWindow' },
@@ -10227,7 +10207,9 @@ var Auth = function (_Component) {
                             { className: 'ui form' },
                             _react2.default.createElement(
                                 'button',
-                                { onClick: _firebase.signIn, className: 'js_google_signin signin centermargin' },
+                                { onClick: function onClick() {
+                                        return _this2.handleSignIn();
+                                    }, className: 'js_google_signin signin centermargin' },
                                 'Sign in'
                             ),
                             _react2.default.createElement(
@@ -10257,6 +10239,129 @@ exports.default = Auth;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.ChatRoom = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ChatRoom = exports.ChatRoom = function (_Component) {
+	_inherits(ChatRoom, _Component);
+
+	function ChatRoom(props, context) {
+		_classCallCheck(this, ChatRoom);
+
+		var _this = _possibleConstructorReturn(this, (ChatRoom.__proto__ || Object.getPrototypeOf(ChatRoom)).call(this, props, context));
+
+		_this._wrapStyle = {
+			position: 'relative',
+			width: "80%",
+			height: "600px",
+			backgroundColor: "#ccc"
+		};
+
+		_this.updateMessage = _this.updateMessage.bind(_this);
+		_this.submitMessage = _this.submitMessage.bind(_this);
+		_this.state = {
+			message: '',
+			messages: []
+		};
+		return _this;
+	}
+
+	_createClass(ChatRoom, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			console.log('componentDidMount');
+			firebase.database().ref('messages/').on('value', function (snapshot) {
+				var currentMessages = snapshot.val();
+
+				if (currentMessages != null) {
+					_this2.setState({
+						messages: currentMessages
+					});
+				}
+			});
+		}
+	}, {
+		key: 'updateMessage',
+		value: function updateMessage(event) {
+			//	console.log('updateMessage: '+event.target.value)
+			this.setState({
+				message: event.target.value
+			});
+		}
+	}, {
+		key: 'submitMessage',
+		value: function submitMessage(event) {
+			console.log('submitMessage: ' + this.state.message);
+			console.log('this event occurs in submitMessage');
+			var nextMessage = {
+				id: this.state.messages.length,
+				text: this.state.message
+				// let list = Object.assign([], this.state.messages)
+				// list.push(nextMessage)
+				// this.setState({
+				// 	messages:list
+				// })
+			};firebase.database().ref('users/messages/' + nextMessage.id).set(nextMessage);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var currentMessage = this.state.messages.map(function (message, i) {
+				return _react2.default.createElement(
+					'li',
+					{ key: message.id },
+					message.text
+				);
+			});
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'ol',
+					null,
+					currentMessage
+				),
+				_react2.default.createElement('input', { onChange: this.updateMessage, type: 'text', placeholder: 'Message' }),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					'button',
+					{ onClick: this.submitMessage },
+					'Submit Message'
+				)
+			);
+		}
+	}]);
+
+	return ChatRoom;
+}(_react.Component);
+
+exports.default = ChatRoom;
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 exports.InfoWindow = exports.Marker = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10269,7 +10374,7 @@ var _reactDom = __webpack_require__(50);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _ChatRoom = __webpack_require__(51);
+var _ChatRoom = __webpack_require__(87);
 
 var _ChatRoom2 = _interopRequireDefault(_ChatRoom);
 
@@ -10574,99 +10679,6 @@ var InfoWindow = exports.InfoWindow = function (_Component3) {
 
 	return InfoWindow;
 }(_react.Component);
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//const firebase = require('firebase');
-
-var initFirebase = exports.initFirebase = function initFirebase() {
-  console.log("in firebase.js");
-
-  var config = {
-    apiKey: "AIzaSyDf4d7CSjoPqmlYuDNZXO3lXj5CsWMH7QI",
-    authDomain: "geocontract-61218.firebaseapp.com",
-    databaseURL: "https://geocontract-61218.firebaseio.com",
-    projectId: "geocontract-61218",
-    storageBucket: "geocontract-61218.appspot.com",
-    messagingSenderId: "653176035877"
-  };
-  firebase.initializeApp(config);
-
-  var database = firebase.database();
-
-  database.ref('/').once('value').then(function (data) {
-    return console.log(data.val());
-  });
-};
-
-// createNewUser('Lisa', 'lisa@email.com', 9999999999, 40.5, 50.7, ['electrician', 'plumber', 'HVAC']);
-
-//database.ref('/lisa').set([0,7,8,9]);
-
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     console.log(user)
-//     database.ref('users/'+user.uid).once('value').then(data=>{
-
-//       if(data.val()){
-//         console.log('welcome ' + user.displayName)
-//       }else{
-//         //console.log('Hey! ' + user.displayName + ' I don\'t know who you are' )
-//         console.log('Hey! ' + user.displayName + ' I don\'t know who you are' )
-//         createNewUser(user.uid, user.email, user.phoneNumber, ['electrician', 'plumber', 'HVAC']);
-//       }
-//     })
-//   } else {
-//     console.log('no user exist')
-//   }
-// });
-
-var createNewUser = exports.createNewUser = function createNewUser(gmailId, email, phonenum, services) {
-  var newUserRef = database.ref('users').push();
-  var newUserKey = newUserRef.key;
-
-  database.ref('users/' + gmailId).set({
-    email: email,
-    phonenum: phonenum,
-    services: services
-  });
-};
-
-//const provider = new firebase.auth.GoogleAuthProvider();
-
-
-var signIn = exports.signIn = function signIn() {
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function (result) {
-    var token = result.credential.accessToken;
-    var user = result.user;
-    console.log(user);
-    console.log(user.displayName);
-    console.log(user.email);
-    console.log(user.uid);
-  }).catch(function (error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.log(error.code);
-    console.log(error.message);
-  });
-};
-
-var signOut = exports.signOut = function signOut() {
-  firebase.auth().signOut().then(function () {
-    console.log('Signout Succesfull');
-  }, function (error) {
-    console.log('Signout Failed');
-  });
-};
 
 /***/ }),
 /* 89 */
